@@ -1,0 +1,4 @@
+---
+- name: Static task
+  ansible.builtin.debug:
+    msg: "Dit is een statische taak via import_tasks"

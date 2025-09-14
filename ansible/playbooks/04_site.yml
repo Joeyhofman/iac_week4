@@ -1,0 +1,14 @@
+---
+- name: Site playbook demo
+  hosts: all
+  become: true
+  tasks:
+    - name: Static import tasks (parse-time)
+      import_tasks: ../tasks/static.yml
+    - name: Dynamic include tasks (runtime)
+      include_tasks: ../tasks/dynamic.yml
+- name: Firewall role
+  hosts: all
+  become: true
+  roles:
+    - role_firewall

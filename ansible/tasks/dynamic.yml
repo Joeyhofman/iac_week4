@@ -1,0 +1,4 @@
+---
+- name: Dynamic task
+  ansible.builtin.debug:
+    msg: "Dit is een dynamische taak via include_tasks"
