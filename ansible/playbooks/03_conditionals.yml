@@ -1,0 +1,24 @@
+---
+- name: Week 4 - Opdracht 3 - Voorwaardelijke taken
+  hosts: all
+  become: true
+  tasks:
+    - name: Alleen uitvoeren op Ubuntu
+      ansible.builtin.debug:
+        msg: "Dit is een Ubuntu machine"
+      when: ansible_distribution == "Ubuntu"
+    - name: Alleen uitvoeren op Red Hat
+      ansible.builtin.debug:
+        msg: "Dit is een Red Hat machine"
+      when: ansible_distribution == "RedHat"
+    - name: Controleer of /etc/hosts bestaat
+      ansible.builtin.stat:
+        path: /etc/hosts
+      register: hosts_stat
+    - name: Faalt als /etc/hosts niet bestaat
+      ansible.builtin.fail:
+        msg: "/etc/hosts bestaat niet!"
+      when: not hosts_stat.stat.exists
+    - name: Echo hallo zonder changed
+      ansible.builtin.command: echo hallo
+      changed_when: false
