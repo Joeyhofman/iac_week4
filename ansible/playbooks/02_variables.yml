@@ -1,0 +1,26 @@
+---
+- name: Week 4 - Opdracht 2 - Variabelen gebruiken
+  hosts: all
+  become: true
+  vars:
+    motd_message: "Welkom bij het lab"
+  tasks:
+    - name: Zet MOTD bericht
+      ansible.builtin.copy:
+        dest: /etc/motd
+        content: "{{ motd_message }}"
+    - name: Maak app.conf met app_name uit inventory
+      ansible.builtin.copy:
+        dest: /etc/app.conf
+        content: "Application = {{ app_name }}"
+    - name: Haal kernelversie op
+      ansible.builtin.command: uname -r
+      register: kernel_version
+    - name: Schrijf kernelversie naar bestand
+      ansible.builtin.copy:
+        dest: /tmp/kernel.txt
+        content: "{{ kernel_version.stdout }}"
+    - name: Schrijf distributienaam naar bestand
+      ansible.builtin.copy:
+        dest: /tmp/facts.txt
+        content: "{{ ansible_distribution }}"
